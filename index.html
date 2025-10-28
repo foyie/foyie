@@ -350,6 +350,39 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
+        /* Mobile Menu Styles */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 2rem;
+            right: 6rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(26, 32, 44, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1002;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] .mobile-menu-toggle {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .mobile-menu-toggle i {
+            font-size: 1.3rem;
+            color: var(--text-subtle);
+        }
+
+        .mobile-menu-toggle:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+        }
 
         nav {
             position: fixed;
@@ -1137,7 +1170,11 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
-
+        .card-loc {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 100;
+        }
         .card ul {
             list-style: none;
             margin-top: 1rem;
@@ -1625,7 +1662,7 @@
             border: 1px solid rgba(102, 126, 234, 0.2);
             transition: all 0.4s;
             position: relative;
-            overflow: hidden;
+            
         }
 
         .beyond-card:hover {
@@ -1927,13 +1964,27 @@
                 right: 1rem;
                 transform: none;
             }
+            nav.mobile-menu-open {
+                bottom: 0;
+            }
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
             }
+
             nav a {
                 font-size: 0.75rem;
                 padding: 0.4rem 0.8rem;
+            }
+            .mobile-menu-toggle {
+                top: 1rem;
+                right: 4.5rem;
+                width: 45px;
+                height: 45px;
+            }
+
+            .mobile-menu-toggle i {
+                font-size: 1.1rem;
             }
             .home-float {
                 width: 50px;
@@ -1997,7 +2048,17 @@
             <span class="brand-name">foyie</span><span class="brand-extension">.py</span>
         </div>
     </div>
-
+    <nav id="mobileNav">
+        <ul>
+            <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="#skills" onclick="closeMobileMenu()">Skills</a></li>
+            <li><a href="#experience" onclick="closeMobileMenu()">Experience</a></li>
+            <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li>
+            <li><a href="#publications" onclick="closeMobileMenu()">Publications</a></li>
+            <li><a href="#beyond" onclick="closeMobileMenu()">Beyond AI</a></li>
+            <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </nav>
     <nav>
         <ul>
             <li><a href="#about">About</a></li>
@@ -2216,6 +2277,11 @@
                                 <div class="tool-name">ONNX</div>
                                 <div class="proficiency-bar"><div class="proficiency-fill"></div></div>
                             </div>
+                            <div class="tool-item" style="--proficiency: 85%">
+                                <img src="SHAP.png" alt="SHAP" class="tool-logo">
+                                <div class="tool-name">SHAP</div>
+                                <div class="proficiency-bar"><div class="proficiency-fill"></div></div>
+                            </div>
                         </div>
                     </div>
 
@@ -2344,6 +2410,7 @@
                 <div>
                     <div class="card-title">Machine Learning Intern</div>
                     <div class="card-subtitle">San Diego Supercomputer Center</div>
+                    <div class="card-loc">San Diego, CA, USA</div>
                 </div>
                 <div class="card-date">Jul 2025 – Present</div>
             </div>
@@ -2359,8 +2426,9 @@
         <div class="card">
             <div class="card-header">
                 <div>
-                    <div class="card-title">Machine Learning Fellow</div>
+                    <div class="card-title">Machine Learning Intern</div>
                     <div class="card-subtitle">San Diego Zoo Wildlife Alliance</div>
+                    <div class="card-loc">San Diego, CA, USA</div>
                 </div>
                 <div class="card-date">Aug 2025 – Present</div>
             </div>
@@ -2376,6 +2444,7 @@
                 <div>
                     <div class="card-title">Machine Learning Engineering Intern</div>
                     <div class="card-subtitle">Moccet</div>
+                    <div class="card-loc">Boston, MA, USA</div>
                 </div>
                 <div class="card-date">May 2025 – Jul 2025</div>
             </div>
@@ -2389,8 +2458,25 @@
         <div class="card">
             <div class="card-header">
                 <div>
+                    <div class="card-title">Machine Learning Researcher</div>
+                    <div class="card-subtitle">MixLab, University of California San Diego</div>
+                    <div class="card-loc">San Diego, CA, USA</div>
+                </div>
+                <div class="card-date">Mar 2025 – Jun 2025</div>
+            </div>
+            <ul>
+                <li>Built the future of molecular interaction prediction through deep learning. I architected a modular interactome model that combined ESM and MoLFormer-XL encoders with custom transformer architectures, leveraging cross-attention mechanisms to understand how proteins and molecules interact at scale.
+                    By integrating massive biological databases (HuRI, HINT, STRING, STITCH) and implementing multi-task pre-training strategies, I pushed the boundaries of predictive accuracy in computational biology, one carefully tuned layer at a time. </li>
+                <!-- <li>Optimized 30000+ image training pipeline with PyTorch and ONNX, enhancing label reliability with MegaDetector v5a</li>
+                <li>Benchmarked YOLO models (MDv5a, v1000, v6) under varied preprocessing techniques improving detection accuracy by 8% and reducing inference time by 21% for real-time deployment at scale</li> -->
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div>
                     <div class="card-title">Data Science Intern</div>
                     <div class="card-subtitle">Innovation and Entrepreneurship Development Cell (CSE)</div>
+                    <div class="card-loc">Kolkata, India</div>
                 </div>
                 <div class="card-date">Jan 2023 – May 2024</div>
             </div>
@@ -2399,6 +2485,21 @@
                 <!-- <li>Developed a novel cascaded triple decoder architecture, RavNet with PyTorch for artery-vein segmentation, achieving an improved 0.74 sensitivity and 0.98 specificity, outperforming U-Net baselines by 2%</li>
                 <li>Curated and preprocessed 400+ retinal scans with advanced augmentation to enhance model generalization and reduce overfitting</li> -->
             </ul>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Machine Learning Intern</div>
+                    <div class="card-subtitle">Indian Institute of Technology Indore</div>
+                    <div class="card-loc">Indore, India</div>
+                </div>
+                <div class="card-date">Jun 2023 – Nov 2023</div>
+                
+            </div>
+            <ul>
+                <li>Tackled one of deep learning's hardest problems: teaching models to learn continuously without forgetting. I implemented and optimized continual learning frameworks (EWC, GEM, PNN) to preserve knowledge across tasks.
+
+                    Brought this work to life by integrating the GEM framework into end-to-end speech-to-speech translation pipelines, enabling models to learn new Indian languages while retaining fluency in previously learned ones, democratizing voice technology for multilingual India.</li></ul>
         </div>
     </section>
 
@@ -2930,14 +3031,14 @@
                         <div class="interest-icon">🥻</div>
                         <div class="interest-content">
                             <h4>Sarees</h4>
-                            <p>Coming from India, nothing make me feel more gorgeous than being in a saree. Its complex, beautiful, and somehow making everything work elegantly together.</p>
+                            <p>Coming from India, nothing makes me feel more gorgeous than being in a saree. Its complex, beautiful, and somehow making everything work elegantly together.</p>
                         </div>
                     </div>
                     <div class="interest-item">
                         <div class="interest-icon">✊</div>
                         <div class="interest-content">
                             <h4>Feminism</h4>
-                            <p>Passionate about debugging society's biased algorithms, because equality isn't a feature to be added later, it's the foundation every system should be built on.</p>
+                            <p>Passionate about debugging society's biased algorithms, because equality isn't a feature, it's the foundation every system should be built on.</p>
                         </div>
                     </div>
                 </div>
@@ -3036,7 +3137,28 @@
         (function() {
             emailjs.init(EMAILJS_CONFIG.publicKey);
         })();
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const nav = document.getElementById('mobileNav');
+            nav.classList.toggle('mobile-menu-open');
+        }
 
+        function closeMobileMenu() {
+            const nav = document.getElementById('mobileNav');
+            nav.classList.remove('mobile-menu-open');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('mobileNav');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (nav.classList.contains('mobile-menu-open') && 
+                !nav.contains(event.target) && 
+                !menuToggle.contains(event.target)) {
+                closeMobileMenu();
+            }
+        });
         // Handle form submission
         document.getElementById('contactForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -3245,6 +3367,9 @@
                 homeFloat.style.opacity = '0';
                 homeFloat.style.pointerEvents = 'none';
             }
+                        // Close mobile menu on scroll
+                        if (window.innerWidth <= 768) {
+                            closeMobileMenu();}
         });
 
         // Active nav link
