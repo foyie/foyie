@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title>foyie.py - Chandrima Das</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1171,7 +1172,7 @@
             gap: 2rem;
             margin-top: 2rem;
         }
-
+<!-- 
         .project-flip-card {
             perspective: 1000px;
             height: 550px;
@@ -1230,8 +1231,60 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
+        } -->
+        /* ==== Flip Card Mobile Fix ==== */
+        .project-flip-card {
+            perspective: 1200px;
+            transform-style: preserve-3d;
+            position: relative;
+            will-change: transform;
         }
-
+        
+        .project-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        
+        /* Flip when card has .flipped */
+        .project-flip-card.flipped .project-flip-inner {
+            transform: rotateY(180deg);
+        }
+        
+        /* Front & Back faces */
+        .project-flip-front,
+        .project-flip-back {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden; /* iOS Safari fix */
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(26, 32, 44, 0.8);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        
+        .project-flip-back {
+            transform: rotateY(180deg);
+        }
+        
+        /* Prevent backside bleed-through */
+        @media (max-width: 768px) {
+            .project-flip-card {
+            overflow: hidden;
+            }
+            .project-flip-front,
+            .project-flip-back {
+            box-shadow: none;
+            }
+        }
+  
         .project-image {
             width: 100%;
             height: 200px;
