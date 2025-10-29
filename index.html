@@ -350,39 +350,6 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
-        /* Mobile Menu Styles */
-        .mobile-menu-toggle {
-            display: none;
-            position: fixed;
-            top: 2rem;
-            right: 6rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(26, 32, 44, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1002;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        [data-theme="light"] .mobile-menu-toggle {
-            background: rgba(255, 255, 255, 0.6);
-        }
-
-        .mobile-menu-toggle i {
-            font-size: 1.3rem;
-            color: var(--text-subtle);
-        }
-
-        .mobile-menu-toggle:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
-        }
 
         nav {
             position: fixed;
@@ -1964,27 +1931,13 @@
                 right: 1rem;
                 transform: none;
             }
-            nav.mobile-menu-open {
-                bottom: 0;
-            }
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-
             nav a {
                 font-size: 0.75rem;
                 padding: 0.4rem 0.8rem;
-            }
-            .mobile-menu-toggle {
-                top: 1rem;
-                right: 4.5rem;
-                width: 45px;
-                height: 45px;
-            }
-
-            .mobile-menu-toggle i {
-                font-size: 1.1rem;
             }
             .home-float {
                 width: 50px;
@@ -2022,7 +1975,57 @@
             nav {
                 max-width: calc(100% - 400px);
             }
+        
         }
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                padding: 0.6rem 0.8rem;
+                border-radius: 0;
+                background: rgba(26, 32, 44, 0.8);
+                backdrop-filter: blur(10px);
+                max-width: 100%;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+                animation: none; /* disable floating animation */
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        
+            nav ul {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: nowrap;
+                gap: 0;
+            }
+        
+            nav a {
+                font-size: 0.85rem;
+                padding: 0.5rem;
+                flex: 1;
+                text-align: center;
+            }
+        
+            body {
+                cursor: auto; /* remove custom cursor on mobile */
+            }
+        
+            .cursor {
+                display: none;
+            }
+        
+            .theme-toggle,
+            .logo-brand,
+            .home-float {
+                z-index: 999;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -2048,17 +2051,7 @@
             <span class="brand-name">foyie</span><span class="brand-extension">.py</span>
         </div>
     </div>
-    <nav id="mobileNav">
-        <ul>
-            <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
-            <li><a href="#skills" onclick="closeMobileMenu()">Skills</a></li>
-            <li><a href="#experience" onclick="closeMobileMenu()">Experience</a></li>
-            <li><a href="#projects" onclick="closeMobileMenu()">Projects</a></li>
-            <li><a href="#publications" onclick="closeMobileMenu()">Publications</a></li>
-            <li><a href="#beyond" onclick="closeMobileMenu()">Beyond AI</a></li>
-            <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
-        </ul>
-    </nav>
+
     <nav>
         <ul>
             <li><a href="#about">About</a></li>
@@ -2097,7 +2090,7 @@
             <a href="tel:+16199538848" title="Phone"><i class="fas fa-phone"></i></a>
         </div>
         <div class="resume-download">
-            <a href="https://drive.google.com/file/d/1ko-gbUy_3M0rkxiZHoTg1v_YZb6xHd4m/view?usp=sharing" class="download-btn" target="_blank">
+            <a href="https://drive.google.com/file/d/1Iu45rhFy7iYfMzyVnKP3Db_P2t4O3Xx6/view?usp=drive_link" class="download-btn" target="_blank">
                 <i class="fas fa-download"></i> Download Resume
             </a>
         </div>
@@ -3137,28 +3130,7 @@
         (function() {
             emailjs.init(EMAILJS_CONFIG.publicKey);
         })();
-        // Mobile Menu Functions
-        function toggleMobileMenu() {
-            const nav = document.getElementById('mobileNav');
-            nav.classList.toggle('mobile-menu-open');
-        }
 
-        function closeMobileMenu() {
-            const nav = document.getElementById('mobileNav');
-            nav.classList.remove('mobile-menu-open');
-        }
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const nav = document.getElementById('mobileNav');
-            const menuToggle = document.querySelector('.mobile-menu-toggle');
-            
-            if (nav.classList.contains('mobile-menu-open') && 
-                !nav.contains(event.target) && 
-                !menuToggle.contains(event.target)) {
-                closeMobileMenu();
-            }
-        });
         // Handle form submission
         document.getElementById('contactForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -3367,9 +3339,6 @@
                 homeFloat.style.opacity = '0';
                 homeFloat.style.pointerEvents = 'none';
             }
-                        // Close mobile menu on scroll
-                        if (window.innerWidth <= 768) {
-                            closeMobileMenu();}
         });
 
         // Active nav link
