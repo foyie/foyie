@@ -1975,57 +1975,122 @@
             nav {
                 max-width: calc(100% - 400px);
             }
-        
         }
-        @media (max-width: 768px) {
-            nav {
-                position: fixed;
-                top: auto;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                transform: none;
-                padding: 0.6rem 0.8rem;
-                border-radius: 0;
-                background: rgba(26, 32, 44, 0.8);
-                backdrop-filter: blur(10px);
-                max-width: 100%;
-                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
-                animation: none; /* disable floating animation */
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-        
-            nav ul {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                flex-wrap: nowrap;
-                gap: 0;
-            }
-        
-            nav a {
-                font-size: 0.85rem;
-                padding: 0.5rem;
-                flex: 1;
-                text-align: center;
-            }
-        
-            body {
-                cursor: auto; /* remove custom cursor on mobile */
-            }
-        
-            .cursor {
-                display: none;
-            }
-        
-            .theme-toggle,
-            .logo-brand,
-            .home-float {
-                z-index: 999;
-            }
+        /* ==== Responsive Glassmorphic Navbar ==== */
+    .menu-toggle {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(102, 126, 234, 0.15);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--light);
+        font-size: 1.3rem;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .menu-toggle:hover {
+        transform: scale(1.1);
+        background: var(--gradient-1);
+        color: white;
+    }
+    
+    @media (max-width: 768px) {
+        /* Full-screen glassmorphic nav */
+        nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(26, 32, 44, 0.7);
+        backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transform: translateY(-100%);
+        transition: transform 0.45s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1500;
+        padding: 2rem;
+        animation: none;
         }
-        
+    
+        [data-theme="light"] nav {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(25px) saturate(180%);
+        }
+    
+        nav.active {
+        transform: translateY(0);
+        }
+    
+        nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        list-style: none;
+        }
+    
+        nav a {
+        font-size: 1.3rem;
+        padding: 0.8rem 1.2rem;
+        border-radius: 12px;
+        text-align: center;
+        color: var(--light);
+        background: rgba(102, 126, 234, 0.15);
+        backdrop-filter: blur(8px);
+        width: 80%;
+        transition: all 0.3s ease;
+        }
+    
+        nav a:hover {
+        background: var(--gradient-1);
+        color: white;
+        transform: scale(1.05);
+        }
+    
+        nav::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(240, 147, 251, 0.4));
+        opacity: 0.35;
+        z-index: -1;
+        }
+    
+        .menu-toggle {
+        display: flex;
+        background: rgba(26, 32, 44, 0.6);
+        backdrop-filter: blur(10px);
+        }
+    
+        body.menu-open {
+        overflow: hidden; /* prevent background scroll */
+        }
+    
+        .logo-brand,
+        .theme-toggle,
+        .home-float {
+        z-index: 1000;
+        }
+    
+        section {
+        padding-top: 5rem;
+        }
+    }
+  
+
     </style>
 </head>
 <body>
@@ -2063,7 +2128,10 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
-
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      
     <div class="home-float" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to Home">
         <i class="fas fa-home"></i>
     </div>
@@ -3419,5 +3487,30 @@
 
         updateCarousel();
     </script>
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.querySelector('nav');
+        const body = document.body;
+      
+        menuToggle.addEventListener('click', () => {
+          const isOpen = nav.classList.toggle('active');
+          menuToggle.innerHTML = isOpen 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
+          body.classList.toggle('menu-open', isOpen);
+        });
+      
+        // Close the menu when a nav link is clicked (mobile only)
+        document.querySelectorAll('nav a').forEach(link => {
+          link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+              nav.classList.remove('active');
+              menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+              body.classList.remove('menu-open');
+            }
+          });
+        });
+      </script>
+      
 </body>
 </html>
