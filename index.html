@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title>foyie.py - Chandrima Das</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,14 +36,27 @@
             --text-subtle: rgba(26, 32, 44, 0.85);
         }
 
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             font-weight: 300;
             background: var(--darker);
             color: var(--text-subtle);
-            overflow-x: hidden;
             letter-spacing: 0.3px;
             cursor: none;
+        }
+
+        section, main, .container {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .cursor {
@@ -213,7 +225,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 1001;
+            z-index: 3000;
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
@@ -427,6 +439,32 @@
         nav a.active {
             color: var(--light);
             background: rgba(102, 126, 234, 0.25);
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            font-size: 1.3rem;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.1);
+            background: var(--gradient-1);
+            color: white;
         }
 
         .scroll-arrow {
@@ -1138,11 +1176,13 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
+
         .card-loc {
             color: var(--accent);
             font-size: 0.9rem;
             font-weight: 100;
         }
+
         .card ul {
             list-style: none;
             margin-top: 1rem;
@@ -1172,37 +1212,41 @@
             gap: 2rem;
             margin-top: 2rem;
         }
-<!-- 
+
         .project-flip-card {
-            perspective: 1000px;
+            perspective: 1200px;
+            transform-style: preserve-3d;
+            position: relative;
+            will-change: transform;
             height: 550px;
         }
-
+        
         .project-flip-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 0.8s;
+            transition: transform 0.8s ease;
             transform-style: preserve-3d;
-            cursor: pointer;
+            will-change: transform;
         }
-
-        .project-flip-card:hover .project-flip-inner {
-            transform: scale(1.02);
-        }
-
+        
         .project-flip-card.flipped .project-flip-inner {
             transform: rotateY(180deg);
         }
-
+        
         .project-flip-front,
         .project-flip-back {
             position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             border-radius: 15px;
             overflow: hidden;
+            background: rgba(26, 32, 44, 0.8);
+            transform-style: preserve-3d;
+            will-change: transform;
             border: 1px solid rgba(102, 126, 234, 0.2);
             box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
             transition: box-shadow 0.3s;
@@ -1222,83 +1266,20 @@
         [data-theme="light"] .project-flip-front {
             background: rgba(255, 255, 255, 0.6);
         }
-
-        .project-flip-back {
-            background: rgba(102, 126, 234, 0.08);
-            backdrop-filter: blur(10px);
-            transform: rotateY(180deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        } -->
-        /* ==== Flip Card Mobile Fix ==== */
-        .project-flip-card {
-            perspective: 1200px;
-            transform-style: preserve-3d;
-            position: relative;
-            will-change: transform;
-        }
-        
-        .project-flip-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s ease;
-            transform-style: preserve-3d;
-            will-change: transform;
-        }
-        
-        /* Flip when card has .flipped */
-        .project-flip-card.flipped .project-flip-inner {
-            transform: rotateY(180deg);
-        }
-        
-        /* Front & Back faces */
-        .project-flip-front,
-        .project-flip-back {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden; /* iOS Safari fix */
-            border-radius: 15px;
-            overflow: hidden;
-            background: rgba(26, 32, 44, 0.8);
-            transform-style: preserve-3d;
-            will-change: transform;
-        }
         
         .project-flip-back {
             transform: rotateY(180deg);
             backface-visibility: hidden;
-            -webkit-backface-visibility: hidden; /* iOS fix */
-            overflow-y: auto;                     /* allow scroll */
-            -webkit-overflow-scrolling: touch;    /* smooth scroll on iPhone */
+            -webkit-backface-visibility: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             padding: 1.5rem;
-            max-height: 85vh;                     /* limit height on mobile */
             border-radius: 15px;
-        }
-        
-        /* Prevent backside bleed-through */
-        @media (max-width: 768px) {
-            .project-flip-card {
-                height: auto;            /* let it expand naturally on small screens */
-                min-height: 550px; 
-            }
-            .project-flip-inner {
-                height: auto;
-              }
-            .project-flip-front,
-            .project-flip-back {
-            box-shadow: none;
-            max-height: 85vh;        /* avoid overflowing the viewport */
-            border-radius: 15px;
-            }
+            background: rgba(102, 126, 234, 0.08);
+            backdrop-filter: blur(10px);
         }
   
         .project-image {
@@ -1698,7 +1679,6 @@
             border: 1px solid rgba(102, 126, 234, 0.2);
             transition: all 0.4s;
             position: relative;
-            
         }
 
         .beyond-card:hover {
@@ -1901,113 +1881,205 @@
             }
         }
 
+        /* ============================= */
+        /* MOBILE & TABLET RESPONSIVE    */
+        /* ============================= */
+
         @media (max-width: 768px) {
-            nav {
-                max-width: 90%;
-                padding: 1rem 1.5rem;
-            }
-            nav ul {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-            nav a {
-                padding: 0.5rem 1rem;
-                font-size: 0.85rem;
-            }
-            .logo-brand {
-                font-size: 1rem;
-                padding: 0.5rem 1rem;
-            }
-            .logo-avatar {
-                width: 30px;
-                height: 30px;
-            }
+            /* Fix theme toggle overlapping logo */
             .theme-toggle {
+                top: 1rem;
+                left: auto;
+                right: 1rem;
                 width: 50px;
                 height: 50px;
+                z-index: 3000;
             }
+
             .theme-toggle i {
                 font-size: 1.2rem;
             }
-            .beyond-grid {
-                grid-template-columns: 1fr;
-            }
-            .spotify-playlist {
-                grid-template-columns: 1fr;
-            }
-            .interests-list {
-                grid-template-columns: 1fr;
-            }
-            .specialty-card {
-                min-width: 100%;
-            }
-            .carousel-container {
-                padding: 0 50px;
-            }
-        }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 3.5rem; }
-            h2 { font-size: 2.5rem; }
-            #about {
-                flex-direction: column-reverse;
-            }
-            .about-image {
-                flex: 0 0 auto;
-            }
-            .profile-pic { 
-                width: 250px; 
-                height: 250px; 
-            }
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            .project-flip-card {
-                height: auto;
-                min-height: 500px;
-            }
             .logo-brand {
                 top: 1rem;
                 left: 1rem;
                 font-size: 0.9rem;
                 padding: 0.5rem 0.8rem;
+                z-index: 1001;
             }
+
             .logo-avatar {
                 width: 28px;
                 height: 28px;
             }
-            .beyond-grid {
-                grid-template-columns: 1fr;
+
+            /* Mobile menu toggle */
+            .menu-toggle {
+                display: flex;
+                top: 1rem;
+                right: 70px;
             }
-            .photo-gallery {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .spotify-playlist {
-                grid-template-columns: 1fr;
-            }
-            .interests-list {
-                grid-template-columns: 1fr;
-            }
+
+            /* Full-screen glassmorphic nav */
             nav {
-                top: auto;
-                bottom: 1rem;
-                padding: 0.8rem 1rem;
-                max-width: calc(100% - 2rem);
-                left: 1rem;
-                right: 1rem;
-                transform: none;
-            }
-            nav ul {
-                flex-wrap: wrap;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(26, 32, 44, 0.7);
+                backdrop-filter: blur(20px) saturate(180%);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                transform: translateY(-100%);
+                transition: transform 0.45s ease;
+                display: flex;
+                flex-direction: column;
                 justify-content: center;
+                align-items: center;
+                z-index: 1500;
+                padding: 2rem;
+                animation: none;
+                max-width: none;
             }
+
+            [data-theme="light"] nav {
+                background: rgba(255, 255, 255, 0.6);
+                backdrop-filter: blur(25px) saturate(180%);
+            }
+
+            nav.active {
+                transform: translateY(0);
+            }
+
+            nav ul {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                list-style: none;
+            }
+
             nav a {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.8rem;
+                font-size: 1.3rem;
+                padding: 0.8rem 1.2rem;
+                border-radius: 12px;
+                text-align: center;
+                color: var(--light);
+                background: rgba(102, 126, 234, 0.15);
+                backdrop-filter: blur(8px);
+                width: 80%;
+                transition: all 0.3s ease;
             }
+
+            nav a:hover {
+                background: var(--gradient-1);
+                color: white;
+                transform: scale(1.05);
+            }
+
+            nav::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(240, 147, 251, 0.4));
+                opacity: 0.35;
+                z-index: -1;
+            }
+
+            body.menu-open {
+                overflow: hidden;
+            }
+
+            /* Skills carousel fixes for mobile */
+            .carousel-container {
+                padding: 0 50px;
+            }
+
+            .specialty-card {
+                min-width: 85%;
+                max-width: 85%;
+                margin: 0 auto;
+            }
+
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-btn.prev {
+                left: 5px;
+            }
+
+            .carousel-btn.next {
+                right: 5px;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+
+            /* Projects grid mobile fix */
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-flip-card {
+                height: auto;
+                min-height: 500px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .project-flip-inner {
+                height: auto;
+                min-height: 500px;
+            }
+
+            .project-flip-front,
+            .project-flip-back {
+                box-shadow: none;
+                max-height: 85vh;
+                border-radius: 15px;
+                position: relative;
+            }
+
+            .project-flip-back {
+                max-height: 85vh;
+                overflow-y: auto;
+            }
+
+            /* General mobile adjustments */
+            h1 { 
+                font-size: 3.5rem; 
+            }
+            
+            h2 { 
+                font-size: 2.5rem; 
+            }
+
+            section {
+                padding-top: 5rem;
+            }
+
+            #about {
+                flex-direction: column-reverse;
+            }
+
+            .about-image {
+                flex: 0 0 auto;
+            }
+
+            .profile-pic { 
+                width: 250px; 
+                height: 250px; 
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
             .home-float {
                 width: 50px;
                 height: 50px;
@@ -2015,180 +2087,45 @@
                 bottom: 1rem;
                 right: 1rem;
             }
-            .theme-toggle {
-                top: 1rem;
-                right: 1rem;
-                width: 45px;
-                height: 45px;
+
+            .beyond-grid {
+                grid-template-columns: 1fr;
             }
-            .theme-toggle i {
-                font-size: 1.1rem;
+
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .tools-grid {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+
+            .spotify-playlist {
+                grid-template-columns: 1fr;
             }
-            .carousel-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+
+            .interests-list {
+                grid-template-columns: 1fr;
             }
         }
 
+        /* Tablet adjustments */
         @media (min-width: 769px) and (max-width: 1200px) {
             nav {
                 max-width: calc(100% - 350px);
             }
+
+            .carousel-container {
+                padding: 0 60px;
+            }
+
+            .specialty-card {
+                min-width: calc((100% - 2rem) / 2);
+            }
         }
 
+        /* Desktop adjustments */
         @media (min-width: 1201px) {
             nav {
                 max-width: calc(100% - 400px);
             }
         }
-        /* ==== Responsive Glassmorphic Navbar ==== */
-    .menu-toggle {
-        display: none;
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: rgba(102, 126, 234, 0.15);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: var(--light);
-        font-size: 1.3rem;
-        align-items: center;
-        justify-content: center;
-        z-index: 2000;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    .menu-toggle:hover {
-        transform: scale(1.1);
-        background: var(--gradient-1);
-        color: white;
-    }
-    
-    @media (max-width: 768px) {
-        /* Full-screen glassmorphic nav */
-        nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background: rgba(26, 32, 44, 0.7);
-        backdrop-filter: blur(20px) saturate(180%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transform: translateY(-100%);
-        transition: transform 0.45s ease;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 1500;
-        padding: 2rem;
-        animation: none;
-        }
-    
-        [data-theme="light"] nav {
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(25px) saturate(180%);
-        }
-    
-        nav.active {
-        transform: translateY(0);
-        }
-    
-        nav ul {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-        list-style: none;
-        }
-    
-        nav a {
-        font-size: 1.3rem;
-        padding: 0.8rem 1.2rem;
-        border-radius: 12px;
-        text-align: center;
-        color: var(--light);
-        background: rgba(102, 126, 234, 0.15);
-        backdrop-filter: blur(8px);
-        width: 80%;
-        transition: all 0.3s ease;
-        }
-    
-        nav a:hover {
-        background: var(--gradient-1);
-        color: white;
-        transform: scale(1.05);
-        }
-    
-        nav::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(240, 147, 251, 0.4));
-        opacity: 0.35;
-        z-index: -1;
-        }
-    
-        .menu-toggle {
-        display: flex;
-        background: rgba(26, 32, 44, 0.6);
-        backdrop-filter: blur(10px);
-        }
-    
-        body.menu-open {
-        overflow: hidden; /* prevent background scroll */
-        }
-    
-        .logo-brand,
-        .theme-toggle,
-        .home-float {
-        z-index: 1000;
-        }
-    
-        section {
-        padding-top: 5rem;
-        }
-}
-  
-/* ==== Fix: Mobile viewport & layout fit ==== */
-html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;   /* prevent horizontal scrollbars */
-    margin: 0;
-    padding: 0;
-  }
-  
-  section, main, .container {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-/* ==== Fix: Theme toggle visibility on mobile ==== */
-.theme-toggle {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 3000; /* stay above nav & menu toggle */
-  }
-  
-  @media (max-width: 768px) {
-    .theme-toggle {
-      top: 1rem;
-      left: 1rem;
-      z-index: 3000; /* always visible on mobile */
-    }
-  }
-    
     </style>
 </head>
 <body>
