@@ -1272,16 +1272,32 @@
         
         .project-flip-back {
             transform: rotateY(180deg);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden; /* iOS fix */
+            overflow-y: auto;                     /* allow scroll */
+            -webkit-overflow-scrolling: touch;    /* smooth scroll on iPhone */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 1.5rem;
+            max-height: 85vh;                     /* limit height on mobile */
+            border-radius: 15px;
         }
         
         /* Prevent backside bleed-through */
         @media (max-width: 768px) {
             .project-flip-card {
-            overflow: hidden;
+                height: auto;            /* let it expand naturally on small screens */
+                min-height: 550px; 
             }
+            .project-flip-inner {
+                height: auto;
+              }
             .project-flip-front,
             .project-flip-back {
             box-shadow: none;
+            max-height: 85vh;        /* avoid overflowing the viewport */
+            border-radius: 15px;
             }
         }
   
@@ -1885,7 +1901,7 @@
             }
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
             nav {
                 max-width: 90%;
                 padding: 1rem 1.5rem;
@@ -2141,9 +2157,38 @@
         section {
         padding-top: 5rem;
         }
-    }
+}
   
-
+/* ==== Fix: Mobile viewport & layout fit ==== */
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;   /* prevent horizontal scrollbars */
+    margin: 0;
+    padding: 0;
+  }
+  
+  section, main, .container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+/* ==== Fix: Theme toggle visibility on mobile ==== */
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 3000; /* stay above nav & menu toggle */
+  }
+  
+  @media (max-width: 768px) {
+    .theme-toggle {
+      top: 1rem;
+      left: 1rem;
+      z-index: 3000; /* always visible on mobile */
+    }
+  }
+    
     </style>
 </head>
 <body>
