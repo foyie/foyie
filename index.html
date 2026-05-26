@@ -1671,7 +1671,7 @@
                 <p style="font-size:14.5px; font-family:'DM Sans',sans-serif; font-weight:400; color:rgba(40,28,90,0.92); line-height:1.72; margin:0;">VeriRAG builds the quality infrastructure most RAG systems skip. A <em style="font-style:normal; color:#4a3a8a;">hybrid retrieval pipeline</em> fuses BM25 and Qdrant dense search via Reciprocal Rank Fusion , every stage closing one of three failure modes: retrieval gap, semantic mismatch, or hallucinated generation. Cohere reranking re-orders candidates; then every answer is scored by an LLM-as-judge that classifies failures as retrieval or generation, producing a diagnostic signal rather than a pass/fail. A CI gate in the evaluation harness blocks deployment if RAGAS faithfulness or answer-relevancy drops more than 5% from baseline. 13 ablation runs across 79 golden questions yielded a key insight: a 3-sentence system prompt outperforms a 100-word one, with faithfulness = 1.0, validating per-module evaluation and real-time WandB dashboards.</p>
               </div>
               <div style="width:38%; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:20px 24px 20px 12px;">
-                <img src=images/veri-rag-arc-d.png" alt="VeriRAG architecture" style="width:100%; height:100%; max-height:320px; object-fit:contain; border-radius:8px; opacity:0.95; display:block;" />
+                <img src="images/veri-rag-arc-d.png" alt="VeriRAG architecture" style="width:100%; height:100%; max-height:320px; object-fit:contain; border-radius:8px; opacity:0.95; display:block;" />
               </div>
               <div class="card-cta-hint dark-cta">View project</div>
             </div>
