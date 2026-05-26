@@ -29,5 +29,5 @@ Currently: Data Science Intern @[SDG&E × SDSC](#) | ML Research Analyst @[San D
 ## 📫 Connect
 
 - **Email:** chdas@ucsd.edu
-- **LinkedIn:** linkedin.com/in/foyie
-- **Portfolio:** (https://foyie.github.io/foyie/)
+- **LinkedIn:** [linkedin.com/in/foyie](https://www.linkedin.com/in/foyie/)
+- **Portfolio:** [Link](https://foyie.github.io/foyie/)
